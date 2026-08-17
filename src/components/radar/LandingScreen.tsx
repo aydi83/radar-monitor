@@ -65,7 +65,7 @@ export function LandingScreen({
               <button
                 key={c}
                 type="button"
-                onClick={() => setValue(examples[i])}
+                onClick={() => setValue(examples[i] ?? "")}
                 className="rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary-glow hover:text-foreground"
               >
                 {c}
