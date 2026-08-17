@@ -139,6 +139,7 @@ function Cell({ label, value, muted }: { label: string; value: string; muted?: b
     <div className={`rounded-xl border border-border p-3 text-center ${muted ? "bg-secondary/60" : "bg-alert-soft"}`}>
       <div className="text-[11px] uppercase tracking-wide text-muted-foreground">{label}</div>
       <div
+        dir="ltr"
         className={`mt-1 text-xl font-semibold ${muted ? "text-muted-foreground line-through" : "text-alert"}`}
       >
         {value}
