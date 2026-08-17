@@ -169,3 +169,45 @@
     color: var(--color-foreground);
   }
 }
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :root[dir="rtl"] body {
+    font-family: "Noto Kufi Arabic", var(--font-sans);
+  }
+}
+
+@utility radar-glow {
+  background-image: var(--gradient-radar);
+}
+
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes radar-ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@utility animate-radar-sweep {
+  animation: radar-sweep 4s linear infinite;
+}
+
+@utility animate-radar-ping {
+  animation: radar-ping 2.6s ease-out infinite;
+}
