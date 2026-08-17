@@ -14,11 +14,12 @@ export function LanguageSelector() {
           type="button"
           onClick={() => setLang(l.code)}
           aria-pressed={lang === l.code}
-          className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+          className={`min-h-11 rounded-full px-3 text-xs font-medium transition-colors ${
             lang === l.code
               ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:text-foreground"
           }`}
+
         >
           {l.label}
         </button>
