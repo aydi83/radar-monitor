@@ -56,8 +56,9 @@ export function LandingScreen({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             rows={3}
+            maxLength={280}
             placeholder={t("placeholder")}
-            className="w-full resize-none rounded-2xl border border-border bg-card p-4 text-base leading-relaxed shadow-soft outline-none transition-shadow placeholder:text-muted-foreground focus:border-primary-glow focus:ring-4 focus:ring-ring/15"
+            className="w-full resize-none break-words rounded-2xl border border-border bg-card p-4 text-base leading-relaxed shadow-soft outline-none transition-shadow placeholder:text-muted-foreground focus:border-primary-glow focus:ring-4 focus:ring-ring/15"
           />
 
           <div className="mt-3 flex flex-wrap gap-2">
@@ -66,12 +67,13 @@ export function LandingScreen({
                 key={c}
                 type="button"
                 onClick={() => setValue(examples[i] ?? "")}
-                className="rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary-glow hover:text-foreground"
+                className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-xs text-muted-foreground transition-colors hover:border-primary-glow hover:text-foreground"
               >
                 {c}
               </button>
             ))}
           </div>
+
 
           <button
             type="submit"
