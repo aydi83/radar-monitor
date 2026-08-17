@@ -26,22 +26,24 @@ export function ConfirmScreen({
       </header>
 
       <main className="flex-1 py-10">
+        <h1 className="sr-only">{t("understood")}</h1>
         <div className="inline-flex items-center gap-2 rounded-full bg-success-soft px-3 py-1.5 text-xs font-medium text-success">
           <Check className="h-3.5 w-3.5" />
           {t("understood")}
         </div>
 
-        <p className="mt-4 rounded-2xl border border-border bg-secondary/60 p-4 text-sm italic text-muted-foreground">
+        <p className="mt-4 line-clamp-5 overflow-hidden break-words rounded-2xl border border-border bg-secondary/60 p-4 text-sm italic text-muted-foreground">
           “{plan.raw}”
         </p>
 
         <div className="mt-6 space-y-3">
           <Block icon={<Target className="h-4 w-4" />} label={t("whatMonitor")}>
-            <p className="text-base font-medium">{plan.target}</p>
+            <p className="break-words text-base font-medium">{plan.target}</p>
           </Block>
           <Block icon={<Bell className="h-4 w-4" />} label={t("condition")}>
             <p className="text-sm leading-relaxed">{plan.condition}</p>
           </Block>
+
           <Block icon={<Globe className="h-4 w-4" />} label={t("sources")}>
             <ul className="space-y-1.5">
               {plan.sources.map((s) => (

@@ -63,6 +63,7 @@ function RadarFlow() {
       ) : (
         <MonitoringScreen
           plan={localizedPlan}
+          onBack={() => setStep("confirm")}
           onNew={() => {
             setRaw("");
             setPlan(null);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Check, Globe, Plus, ShieldCheck, ThumbsDown, ThumbsUp, TrendingDown } from "lucide-react";
+import { ArrowRight, Check, Globe, Pencil, Plus, ShieldCheck, ThumbsDown, ThumbsUp, TrendingDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import type { RadarPlan } from "@/lib/radar-parser";
 import { RadarMark } from "./RadarMark";
@@ -7,7 +7,15 @@ import { LanguageSelector } from "./LanguageSelector";
 
 type DemoState = "stable" | "change";
 
-export function MonitoringScreen({ plan, onNew }: { plan: RadarPlan; onNew: () => void }) {
+export function MonitoringScreen({
+  plan,
+  onNew,
+  onBack,
+}: {
+  plan: RadarPlan;
+  onNew: () => void;
+  onBack: () => void;
+}) {
   const { t } = useI18n();
   const [state, setState] = useState<DemoState>("stable");
   const [feedback, setFeedback] = useState<null | "yes" | "no">(null);
@@ -23,6 +31,7 @@ export function MonitoringScreen({ plan, onNew }: { plan: RadarPlan; onNew: () =
       </header>
 
       <main className="flex-1 py-8">
+        <h1 className="sr-only">{t("active")}</h1>
         <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
           <div className="flex items-center gap-2 text-xs font-medium text-success">
             <span className="relative flex h-2 w-2">
@@ -31,11 +40,15 @@ export function MonitoringScreen({ plan, onNew }: { plan: RadarPlan; onNew: () =
             </span>
             {t("active")}
           </div>
-          <p className="mt-3 text-base font-medium leading-snug">{plan.target}</p>
+          <p className="mt-3 break-words text-base font-medium leading-snug">{plan.target}</p>
           <p className="mt-1 text-xs text-muted-foreground">{t("checkedAgo")}</p>
         </div>
 
-        <div className="mt-4 inline-flex w-full rounded-full border border-border bg-card p-1 shadow-soft">
+        <div
+          className="mt-4 inline-flex w-full rounded-full border border-border bg-card p-1 shadow-soft"
+          role="group"
+          aria-label={t("demo")}
+        >
           {(["stable", "change"] as DemoState[]).map((s) => (
             <button
               key={s}
@@ -44,7 +57,7 @@ export function MonitoringScreen({ plan, onNew }: { plan: RadarPlan; onNew: () =
                 setFeedback(null);
               }}
               aria-pressed={state === s}
-              className={`flex-1 rounded-full px-3 py-2 text-xs font-medium transition-colors ${
+              className={`min-h-11 flex-1 rounded-full px-3 text-xs font-medium transition-colors ${
                 state === s ? "bg-primary text-primary-foreground" : "text-muted-foreground"
               }`}
             >
@@ -95,21 +108,23 @@ export function MonitoringScreen({ plan, onNew }: { plan: RadarPlan; onNew: () =
 
               <div className="mt-5 border-t border-border pt-4">
                 {feedback ? (
-                  <p className="text-sm text-success">{t("thanks")}</p>
+                  <p role="status" aria-live="polite" className="text-sm text-success">
+                    {t("thanks")}
+                  </p>
                 ) : (
                   <div className="flex items-center justify-between gap-3">
                     <span className="text-sm text-muted-foreground">{t("useful")}</span>
                     <div className="flex gap-2">
                       <button
                         onClick={() => setFeedback("yes")}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium transition-colors hover:border-success hover:text-success"
+                        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-border px-4 text-xs font-medium transition-colors hover:border-success hover:text-success"
                       >
                         <ThumbsUp className="h-3.5 w-3.5" />
                         {t("yes")}
                       </button>
                       <button
                         onClick={() => setFeedback("no")}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium transition-colors hover:border-destructive hover:text-destructive"
+                        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-border px-4 text-xs font-medium transition-colors hover:border-destructive hover:text-destructive"
                       >
                         <ThumbsDown className="h-3.5 w-3.5" />
                         {t("no")}
@@ -122,13 +137,22 @@ export function MonitoringScreen({ plan, onNew }: { plan: RadarPlan; onNew: () =
           </section>
         )}
 
-        <button
-          onClick={onNew}
-          className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-6 py-3.5 text-sm font-medium transition-colors hover:bg-secondary"
-        >
-          <Plus className="h-4 w-4" />
-          {t("newRequest")}
-        </button>
+        <div className="mt-8 space-y-3">
+          <button
+            onClick={onBack}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-6 py-3.5 text-sm font-medium transition-colors hover:bg-secondary"
+          >
+            <Pencil className="h-4 w-4" />
+            {t("edit")}
+          </button>
+          <button
+            onClick={onNew}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-6 py-3.5 text-sm font-medium transition-colors hover:bg-secondary"
+          >
+            <Plus className="h-4 w-4" />
+            {t("newRequest")}
+          </button>
+        </div>
       </main>
     </div>
   );
