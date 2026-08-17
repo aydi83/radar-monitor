@@ -1,24 +1,75 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { I18nProvider, useI18n } from "@/lib/i18n";
+import { parseRequest, type RadarPlan } from "@/lib/radar-parser";
+import { LandingScreen } from "@/components/radar/LandingScreen";
+import { ConfirmScreen } from "@/components/radar/ConfirmScreen";
+import { MonitoringScreen } from "@/components/radar/MonitoringScreen";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "RADAR — Monitor anything, get told when it changes" },
+      {
+        name: "description",
+        content:
+          "Tell RADAR what you want to monitor — a product price, a company, a topic — and get alerted only when something important changes.",
+      },
+      { property: "og:title", content: "RADAR — Monitor anything, get told when it changes" },
+      {
+        property: "og:description",
+        content: "Describe what to monitor in English, French or Arabic. RADAR watches it for you.",
+      },
+    ],
+  }),
+  component: RadarApp,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function RadarApp() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <I18nProvider>
+      <RadarFlow />
+    </I18nProvider>
+  );
+}
+
+type Step = "landing" | "confirm" | "monitoring";
+
+function RadarFlow() {
+  const { lang } = useI18n();
+  const [step, setStep] = useState<Step>("landing");
+  const [raw, setRaw] = useState("");
+  const [plan, setPlan] = useState<RadarPlan | null>(null);
+
+  const start = (value: string) => {
+    setRaw(value);
+    setPlan(parseRequest(value, lang));
+    setStep("confirm");
+  };
+
+  // Keep the plan copy aligned with the current UI language.
+  const localizedPlan = plan ? parseRequest(plan.raw, lang) : null;
+
+  return (
+    <div className="min-h-dvh bg-background text-foreground">
+      {step === "landing" || !localizedPlan ? (
+        <LandingScreen initialValue={raw} onSubmit={start} />
+      ) : step === "confirm" ? (
+        <ConfirmScreen
+          plan={localizedPlan}
+          onConfirm={() => setStep("monitoring")}
+          onEdit={() => setStep("landing")}
+        />
+      ) : (
+        <MonitoringScreen
+          plan={localizedPlan}
+          onNew={() => {
+            setRaw("");
+            setPlan(null);
+            setStep("landing");
+          }}
+        />
+      )}
     </div>
   );
 }
