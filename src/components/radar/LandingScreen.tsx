@@ -48,7 +48,7 @@ export function LandingScreen({
           </label>
 
           {/* Primary action: the monitoring input, framed with a subtle radar cue. */}
-          <div className="relative rounded-3xl bg-gradient-to-b from-primary-glow/25 to-primary/10 p-[1.5px] shadow-lift">
+          <div className="relative rounded-3xl bg-gradient-to-b from-primary-glow/25 to-primary/10 p-[1.5px] shadow-lift transition-shadow focus-within:ring-4 focus-within:ring-ring/20">
             <div className="relative overflow-hidden rounded-[calc(1.5rem-1px)] bg-card">
               <span
                 aria-hidden="true"
