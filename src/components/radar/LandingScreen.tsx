@@ -17,7 +17,7 @@ export function LandingScreen({
   const examples = [t("ex1"), t("ex2"), t("ex3")];
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-8 pt-5 sm:max-w-xl sm:px-6 sm:pt-8">
+    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-x-clip px-4 pb-8 pt-5 sm:max-w-xl sm:px-6 sm:pt-8">
       <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <div className="flex min-w-0 items-center gap-2">
           <RadarMark size={26} animated />
