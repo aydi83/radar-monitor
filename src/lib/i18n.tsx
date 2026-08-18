@@ -13,16 +13,11 @@ const dict = {
     tagline: "Tell me what you want to monitor, and I'll tell you when it changes.",
     placeholder: "What do you want me to monitor?",
     start: "Start monitoring",
-  en: {
-    tagline: "Tell me what you want to monitor, and I'll tell you when it changes.",
-    placeholder: "What do you want me to monitor?",
-    start: "Start monitoring",
     examples: "Try an example",
     ex1: "Monitor iPhone 16 price",
     ex2: "Monitor Tesla",
     ex3: "Monitor electric car prices",
 
-    exTopic: "Topic",
     understood: "I understood your request",
     whatMonitor: "What I will monitor",
     condition: "Alert condition",
