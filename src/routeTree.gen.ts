@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicRunMonitorChecksRouteImport } from './routes/api/public/run-monitor-checks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicRunMonitorChecksRoute =
+  ApiPublicRunMonitorChecksRouteImport.update({
+    id: '/api/public/run-monitor-checks',
+    path: '/api/public/run-monitor-checks',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/public/run-monitor-checks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/run-monitor-checks'
+  id: '__root__' | '/' | '/api/public/run-monitor-checks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicRunMonitorChecksRoute: typeof ApiPublicRunMonitorChecksRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/run-monitor-checks': {
+      id: '/api/public/run-monitor-checks'
+      path: '/api/public/run-monitor-checks'
+      fullPath: '/api/public/run-monitor-checks'
+      preLoaderRoute: typeof ApiPublicRunMonitorChecksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicRunMonitorChecksRoute: ApiPublicRunMonitorChecksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
