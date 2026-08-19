@@ -14,7 +14,158 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      monitor_changes: {
+        Row: {
+          after_text: string | null
+          before_text: string | null
+          check_id: string | null
+          created_at: string
+          detected_at: string
+          id: string
+          importance: string
+          source_url: string | null
+          summary: string | null
+          task_id: string
+          title: string | null
+          useful: boolean | null
+        }
+        Insert: {
+          after_text?: string | null
+          before_text?: string | null
+          check_id?: string | null
+          created_at?: string
+          detected_at?: string
+          id?: string
+          importance?: string
+          source_url?: string | null
+          summary?: string | null
+          task_id: string
+          title?: string | null
+          useful?: boolean | null
+        }
+        Update: {
+          after_text?: string | null
+          before_text?: string | null
+          check_id?: string | null
+          created_at?: string
+          detected_at?: string
+          id?: string
+          importance?: string
+          source_url?: string | null
+          summary?: string | null
+          task_id?: string
+          title?: string | null
+          useful?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monitor_changes_check_id_fkey"
+            columns: ["check_id"]
+            isOneToOne: false
+            referencedRelation: "monitor_checks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "monitor_changes_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "monitor_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monitor_checks: {
+        Row: {
+          changed: boolean
+          checked_at: string
+          content_hash: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          status: string
+          task_id: string
+        }
+        Insert: {
+          changed?: boolean
+          checked_at?: string
+          content_hash?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          status?: string
+          task_id: string
+        }
+        Update: {
+          changed?: boolean
+          checked_at?: string
+          content_hash?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          status?: string
+          task_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monitor_checks_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "monitor_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monitor_tasks: {
+        Row: {
+          active: boolean
+          alert_condition: string | null
+          check_interval_minutes: number
+          created_at: string
+          id: string
+          last_checked_at: string | null
+          last_snapshot_hash: string | null
+          last_snapshot_text: string | null
+          monitor_type: string
+          request_text: string
+          target_name: string | null
+          target_url: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          active?: boolean
+          alert_condition?: string | null
+          check_interval_minutes?: number
+          created_at?: string
+          id?: string
+          last_checked_at?: string | null
+          last_snapshot_hash?: string | null
+          last_snapshot_text?: string | null
+          monitor_type?: string
+          request_text: string
+          target_name?: string | null
+          target_url?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          active?: boolean
+          alert_condition?: string | null
+          check_interval_minutes?: number
+          created_at?: string
+          id?: string
+          last_checked_at?: string | null
+          last_snapshot_hash?: string | null
+          last_snapshot_text?: string | null
+          monitor_type?: string
+          request_text?: string
+          target_name?: string | null
+          target_url?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
