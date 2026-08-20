@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRadarIndexRouteImport } from './routes/_authenticated/radar.index'
 import { Route as ApiPublicRunMonitorChecksRouteImport } from './routes/api/public/run-monitor-checks'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,10 +20,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRadarIndexRoute = AuthenticatedRadarIndexRouteImport.update({
+  id: '/radar/',
+  path: '/radar/',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiPublicRunMonitorChecksRoute =
   ApiPublicRunMonitorChecksRouteImport.update({
@@ -34,28 +45,39 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
+  '/radar/': typeof AuthenticatedRadarIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
+  '/radar': typeof AuthenticatedRadarIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
+  '/_authenticated/radar/': typeof AuthenticatedRadarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/api/public/run-monitor-checks'
+  fullPaths: '/' | '/auth' | '/api/public/run-monitor-checks' | '/radar/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/api/public/run-monitor-checks'
-  id: '__root__' | '/' | '/auth' | '/api/public/run-monitor-checks'
+  to: '/' | '/auth' | '/api/public/run-monitor-checks' | '/radar'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/api/public/run-monitor-checks'
+    | '/_authenticated/radar/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicRunMonitorChecksRoute: typeof ApiPublicRunMonitorChecksRoute
 }
@@ -69,12 +91,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/radar/': {
+      id: '/_authenticated/radar/'
+      path: '/radar'
+      fullPath: '/radar/'
+      preLoaderRoute: typeof AuthenticatedRadarIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/public/run-monitor-checks': {
       id: '/api/public/run-monitor-checks'
@@ -86,8 +122,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedRadarIndexRoute: typeof AuthenticatedRadarIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedRadarIndexRoute: AuthenticatedRadarIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicRunMonitorChecksRoute: ApiPublicRunMonitorChecksRoute,
 }
