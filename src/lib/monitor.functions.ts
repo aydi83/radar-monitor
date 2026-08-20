@@ -109,7 +109,7 @@ export const getMonitorTask = createServerFn({ method: "GET" })
 
 export const createMonitorTask = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { requestText: string; url: string; condition?: string; intervalMinutes?: number }) => {
+  .inputValidator((data: { requestText: string; url: string; condition?: string | undefined; intervalMinutes?: number | undefined }) => {
     const requestText = (data?.requestText ?? "").trim().slice(0, 500);
     const url = (data?.url ?? "").trim();
     if (requestText.length < 2) throw new Error("Request text is required");
@@ -177,15 +177,21 @@ export const runTaskCheckNow = createServerFn({ method: "POST" })
     // Ownership enforced by RLS on this read.
     const { data: task, error } = await context.supabase
       .from("monitor_tasks")
-      .select("id, target_url, target_name, last_snapshot_hash, last_snapshot_text")
+      .select("id, target_url, target_name, last_snapshot_hash, last_snapshot_text, last_checked_at")
       .eq("id", data.id)
       .maybeSingle();
     if (error) throw new Error(error.message);
     if (!task) throw new Error("Task not found");
 
+    // Basic rate limit: one manual check per task per 2 minutes.
+    if (task.last_checked_at && Date.now() - new Date(task.last_checked_at).getTime() < 120_000) {
+      return { status: "rate_limited" as const, changed: false };
+    }
+
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { runCheckForTask } = await import("./monitor.server");
-    return await runCheckForTask(supabaseAdmin as never, task as never);
+    const result = await runCheckForTask(supabaseAdmin as never, task as never);
+    return { ...result, status: result.status as "ok" | "error" | "rate_limited" };
   });
 
 export const markChangeUseful = createServerFn({ method: "POST" })

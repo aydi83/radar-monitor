@@ -45,7 +45,13 @@ function MyRadar() {
     const pending = takePendingRequest();
     if (!pending) return;
     setCreating(true);
-    create({ data: { requestText: pending.requestText, url: pending.url, condition: pending.condition } })
+    create({
+      data: {
+        requestText: pending.requestText,
+        url: pending.url,
+        ...(pending.condition ? { condition: pending.condition } : {}),
+      },
+    })
       .then((res) => {
         if (res.ok) {
           queryClient.invalidateQueries({ queryKey: ["monitor-tasks"] });

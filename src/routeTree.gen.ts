@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRadarIndexRouteImport } from './routes/_authenticated/radar.index'
+import { Route as AuthenticatedRadarIdRouteImport } from './routes/_authenticated/radar.$id'
 import { Route as ApiPublicRunMonitorChecksRouteImport } from './routes/api/public/run-monitor-checks'
 
 const IndexRoute = IndexRouteImport.update({
@@ -34,6 +35,11 @@ const AuthenticatedRadarIndexRoute = AuthenticatedRadarIndexRouteImport.update({
   path: '/radar/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedRadarIdRoute = AuthenticatedRadarIdRouteImport.update({
+  id: '/radar/$id',
+  path: '/radar/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiPublicRunMonitorChecksRoute =
   ApiPublicRunMonitorChecksRouteImport.update({
     id: '/api/public/run-monitor-checks',
@@ -44,12 +50,14 @@ const ApiPublicRunMonitorChecksRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/radar/': typeof AuthenticatedRadarIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/radar': typeof AuthenticatedRadarIndexRoute
 }
@@ -58,19 +66,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/_authenticated/radar/': typeof AuthenticatedRadarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/api/public/run-monitor-checks' | '/radar/'
+  fullPaths:
+    '/' | '/auth' | '/radar/$id' | '/api/public/run-monitor-checks' | '/radar/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/api/public/run-monitor-checks' | '/radar'
+  to: '/' | '/auth' | '/radar/$id' | '/api/public/run-monitor-checks' | '/radar'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/radar/$id'
     | '/api/public/run-monitor-checks'
     | '/_authenticated/radar/'
   fileRoutesById: FileRoutesById
@@ -112,6 +123,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRadarIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/radar/$id': {
+      id: '/_authenticated/radar/$id'
+      path: '/radar/$id'
+      fullPath: '/radar/$id'
+      preLoaderRoute: typeof AuthenticatedRadarIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/run-monitor-checks': {
       id: '/api/public/run-monitor-checks'
       path: '/api/public/run-monitor-checks'
@@ -123,10 +141,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedRadarIdRoute: typeof AuthenticatedRadarIdRoute
   AuthenticatedRadarIndexRoute: typeof AuthenticatedRadarIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedRadarIdRoute: AuthenticatedRadarIdRoute,
   AuthenticatedRadarIndexRoute: AuthenticatedRadarIndexRoute,
 }
 
