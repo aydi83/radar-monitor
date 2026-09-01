@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRadarIndexRouteImport } from './routes/_authenticated/radar.index'
 import { Route as AuthenticatedRadarIdRouteImport } from './routes/_authenticated/radar.$id'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -49,6 +55,7 @@ const ApiPublicRunMonitorChecksRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
@@ -56,6 +63,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
@@ -65,6 +73,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/_authenticated/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
@@ -73,13 +82,25 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/radar/$id' | '/api/public/run-monitor-checks' | '/radar/'
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/radar/$id'
+    | '/api/public/run-monitor-checks'
+    | '/radar/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/radar/$id' | '/api/public/run-monitor-checks' | '/radar'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/radar/$id'
+    | '/api/public/run-monitor-checks'
+    | '/radar'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/about'
     | '/auth'
     | '/_authenticated/radar/$id'
     | '/api/public/run-monitor-checks'
@@ -89,6 +110,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ApiPublicRunMonitorChecksRoute: typeof ApiPublicRunMonitorChecksRoute
 }
@@ -107,6 +129,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -156,6 +185,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ApiPublicRunMonitorChecksRoute: ApiPublicRunMonitorChecksRoute,
 }
