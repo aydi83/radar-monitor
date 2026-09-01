@@ -91,7 +91,7 @@ function TaskDetail() {
     ? "paused"
     : lastCheck?.status === "error"
       ? "error"
-      : changes.length > 0
+      : lastCheck?.changed
         ? "changed"
         : lastCheck
           ? "stable"
@@ -138,6 +138,25 @@ function TaskDetail() {
               <TrendingDown className="h-4 w-4" />
               {t("changeTitle")}
             </div>
+            {changes[0] ? (
+              <div className="mt-2 space-y-1">
+                <p className="break-words text-sm">{changes[0].summary}</p>
+                <p className="text-[11px] text-muted-foreground">
+                  {new Date(changes[0].detected_at).toLocaleString()}
+                </p>
+                {changes[0].source_url ? (
+                  <a
+                    dir="ltr"
+                    href={changes[0].source_url}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    className="block break-all text-[11px] underline underline-offset-4"
+                  >
+                    {t("source")}: {changes[0].source_url}
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
           </section>
         ) : state === "error" ? (
           <section className="mt-5 rounded-2xl border border-destructive/30 bg-destructive/10 p-5">
