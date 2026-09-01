@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedRadarIndexRouteImport } from './routes/_authenticated/radar.index'
 import { Route as AuthenticatedRadarIdRouteImport } from './routes/_authenticated/radar.$id'
 import { Route as ApiPublicRunMonitorChecksRouteImport } from './routes/api/public/run-monitor-checks'
@@ -42,6 +43,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRadarIndexRoute = AuthenticatedRadarIndexRouteImport.update({
   id: '/radar/',
   path: '/radar/',
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/radar/': typeof AuthenticatedRadarIndexRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/radar': typeof AuthenticatedRadarIndexRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/_authenticated/radar/': typeof AuthenticatedRadarIndexRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/privacy'
+    | '/terms'
     | '/radar/$id'
     | '/api/public/run-monitor-checks'
     | '/radar/'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/privacy'
+    | '/terms'
     | '/radar/$id'
     | '/api/public/run-monitor-checks'
     | '/radar'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/privacy'
+    | '/terms'
     | '/_authenticated/radar/$id'
     | '/api/public/run-monitor-checks'
     | '/_authenticated/radar/'
@@ -125,6 +137,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
   ApiPublicRunMonitorChecksRoute: typeof ApiPublicRunMonitorChecksRoute
 }
 
@@ -163,6 +176,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/radar/': {
@@ -208,6 +228,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
   ApiPublicRunMonitorChecksRoute: ApiPublicRunMonitorChecksRoute,
 }
 export const routeTree = rootRouteImport
