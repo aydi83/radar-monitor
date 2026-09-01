@@ -48,10 +48,17 @@ export const listMonitorTasks = createServerFn({ method: "GET" })
         .limit(200),
     ]);
 
-    const latestCheck = new Map<string, { status: string; error_message: string | null }>();
+    const latestCheck = new Map<
+      string,
+      { status: string; changed: boolean; error_message: string | null }
+    >();
     for (const c of checks ?? []) {
       if (!latestCheck.has(c.task_id)) {
-        latestCheck.set(c.task_id, { status: c.status, error_message: c.error_message });
+        latestCheck.set(c.task_id, {
+          status: c.status,
+          changed: !!c.changed,
+          error_message: c.error_message,
+        });
       }
     }
     const latestChange = new Map<string, string>();
@@ -65,7 +72,8 @@ export const listMonitorTasks = createServerFn({ method: "GET" })
       let state: TaskSummary["state"] = "pending";
       if (!task.active) state = "paused";
       else if (check?.status === "error") state = "error";
-      else if (changedAt) state = "changed";
+      // Status must reflect the LATEST check, not the mere existence of an old change.
+      else if (check?.changed) state = "changed";
       else if (check) state = "stable";
       return { ...task, state, last_error: check?.error_message ?? null, last_change_at: changedAt };
     });
@@ -204,4 +212,16 @@ export const markChangeUseful = createServerFn({ method: "POST" })
       .eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
+  });
+
+
+/** Permanently delete the signed-in user's account and all monitoring data. */
+export const deleteMyAccount = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await context.supabase.from("monitor_tasks").delete().eq("user_id", context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.auth.admin.deleteUser(context.userId);
+    if (error) throw new Error(error.message);
+    return { ok: true as const };
   });
