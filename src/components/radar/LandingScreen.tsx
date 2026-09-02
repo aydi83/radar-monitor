@@ -3,16 +3,21 @@ import { ArrowRight, Radar } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { RadarMark } from "./RadarMark";
 import { LanguageSelector } from "./LanguageSelector";
+import { StarterCategories } from "./StarterCategories";
+import { SiteFooter } from "./SiteFooter";
 
 export function LandingScreen({
   initialValue = "",
+  initialUrl = "",
   onSubmit,
 }: {
   initialValue?: string;
-  onSubmit: (value: string) => void;
+  initialUrl?: string;
+  onSubmit: (value: string, url: string) => void;
 }) {
   const { t } = useI18n();
   const [value, setValue] = useState(initialValue);
+  const [url, setUrl] = useState(initialUrl);
 
   const examples = [t("ex1"), t("ex2"), t("ex3")];
 
@@ -32,15 +37,18 @@ export function LandingScreen({
         <div className="relative">
           <div className="radar-glow pointer-events-none absolute -inset-x-16 -top-28 h-72 opacity-70" />
           <h1 className="relative text-balance text-[1.75rem] font-semibold leading-[1.15] tracking-tight sm:text-4xl">
-            {t("tagline")}
+            {t("slogan")}
           </h1>
+          <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground">
+            {t("tagline")}
+          </p>
         </div>
 
         <form
           className="mt-7"
           onSubmit={(e) => {
             e.preventDefault();
-            if (value.trim().length > 1) onSubmit(value.trim());
+            if (value.trim().length > 1) onSubmit(value.trim(), url.trim());
           }}
         >
           <label htmlFor="radar-input" className="sr-only">
@@ -101,7 +109,16 @@ export function LandingScreen({
               ))}
             </div>
           </div>
+
+          <StarterCategories
+            onPick={(item) => {
+              setValue(item.request);
+              setUrl(item.url);
+            }}
+          />
         </form>
+
+        <SiteFooter />
       </main>
     </div>
   );
