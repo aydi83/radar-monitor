@@ -75,7 +75,7 @@ function AboutPage() {
             </p>
             <p>
               RADAR monitors selected products, markets, topics, companies, prices and other
-              public information sources. It stores a snapshot of the page you選 choose, re-checks it
+              public information sources. It stores a snapshot of the page you choose, re-checks it
               automatically, and compares the meaningful content over time.
             </p>
             <p>
