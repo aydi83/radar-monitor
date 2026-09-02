@@ -1,23 +1,37 @@
-import { ArrowRight, Bell, Check, Globe, Pencil, Target } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Bell, Check, Globe, Link2, Loader2, Pencil, Target } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import type { RadarPlan } from "@/lib/radar-parser";
 import { RadarMark } from "./RadarMark";
 import { LanguageSelector } from "./LanguageSelector";
+import { SiteFooter } from "./SiteFooter";
 
 export function ConfirmScreen({
   plan,
-  onConfirm,
+  url,
+  onUrlChange,
+  onActivate,
+  onDemo,
   onEdit,
+  busy = false,
+  error = null,
 }: {
   plan: RadarPlan;
-  onConfirm: () => void;
+  url: string;
+  onUrlChange: (v: string) => void;
+  onActivate: () => void;
+  onDemo: () => void;
   onEdit: () => void;
+  busy?: boolean;
+  error?: string | null;
 }) {
   const { t } = useI18n();
+  const [touched, setTouched] = useState(false);
+  const missingUrl = url.trim().length === 0;
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-xl flex-col px-5 pb-10 pt-6">
-      <header className="flex items-center justify-between">
+    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-10 pt-6 sm:max-w-xl sm:px-6">
+      <header className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <RadarMark size={22} />
           <span className="text-sm font-semibold tracking-[0.18em]">RADAR</span>
@@ -44,6 +58,23 @@ export function ConfirmScreen({
             <p className="text-sm leading-relaxed">{plan.condition}</p>
           </Block>
 
+          <Block icon={<Link2 className="h-4 w-4" />} label={t("urlLabel")}>
+            <input
+              type="url"
+              inputMode="url"
+              dir="ltr"
+              value={url}
+              onChange={(e) => onUrlChange(e.target.value)}
+              onBlur={() => setTouched(true)}
+              placeholder={t("urlPlaceholder")}
+              className="min-h-12 w-full rounded-xl border border-border bg-background px-3 text-sm outline-none focus-visible:ring-4 focus-visible:ring-ring/20"
+            />
+            <p className="mt-2 text-xs text-muted-foreground">{t("urlHint")}</p>
+            {touched && missingUrl ? (
+              <p className="mt-1 text-xs text-muted-foreground">{t("sourceRequired")}</p>
+            ) : null}
+          </Block>
+
           <Block icon={<Globe className="h-4 w-4" />} label={t("sources")}>
             <ul className="space-y-1.5">
               {plan.sources.map((s) => (
@@ -56,22 +87,39 @@ export function ConfirmScreen({
           </Block>
         </div>
 
+        {error ? (
+          <p role="alert" className="mt-4 rounded-xl bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {error}
+          </p>
+        ) : null}
+
         <div className="mt-8 space-y-3">
           <button
-            onClick={onConfirm}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-base font-medium text-primary-foreground shadow-lift transition-colors hover:bg-primary/92"
+            onClick={onActivate}
+            disabled={busy || missingUrl}
+            className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-lift transition-colors hover:bg-primary/92 disabled:opacity-40"
           >
-            {t("start")}
-            <ArrowRight className="h-4 w-4 rtl:rotate-180" />
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {busy ? t("activating") : t("activate")}
+            {!busy ? <ArrowRight className="h-4 w-4 rtl:rotate-180" /> : null}
+          </button>
+          <p className="text-center text-xs text-muted-foreground">{t("accountNeededSub")}</p>
+          <button
+            onClick={onDemo}
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-6 py-3 text-sm font-medium transition-colors hover:bg-secondary"
+          >
+            {t("demoMode")}
           </button>
           <button
             onClick={onEdit}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-6 py-3.5 text-sm font-medium transition-colors hover:bg-secondary"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-6 py-3 text-sm font-medium transition-colors hover:bg-secondary"
           >
             <Pencil className="h-4 w-4" />
             {t("edit")}
           </button>
         </div>
+
+        <SiteFooter />
       </main>
     </div>
   );

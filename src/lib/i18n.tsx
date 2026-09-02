@@ -109,6 +109,12 @@ const dict = {
     deleteAccount: "Delete my account",
     deleteAccountConfirm: "Delete your account and all monitors? This cannot be undone.",
     notFinancial: "Informational monitoring only — not financial advice.",
+    navBusiness: "Business",
+    navContact: "Contact",
+    startersTitle: "Popular starters",
+    startersHint: "Optional — pick one to prefill your request, or type your own above.",
+    urlStep: "Source page",
+    activating: "Activating…",
   },
   fr: {
     tagline: "Dites-moi ce que vous voulez surveiller, je vous préviens quand ça change.",
@@ -210,6 +216,12 @@ const dict = {
     deleteAccount: "Supprimer mon compte",
     deleteAccountConfirm: "Supprimer votre compte et toutes vos surveillances ? Action irréversible.",
     notFinancial: "Surveillance informative uniquement — pas un conseil financier.",
+    navBusiness: "Entreprises",
+    navContact: "Contact",
+    startersTitle: "Suggestions populaires",
+    startersHint: "Facultatif — choisissez-en une pour préremplir, ou écrivez la vôtre ci-dessus.",
+    urlStep: "Page source",
+    activating: "Activation…",
   },
   ar: {
     tagline: "أخبرني بما تريد مراقبته، وسأخبرك عندما يتغيّر.",
@@ -311,6 +323,12 @@ const dict = {
     deleteAccount: "حذف حسابي",
     deleteAccountConfirm: "حذف حسابك وكل عمليات المراقبة؟ لا يمكن التراجع.",
     notFinancial: "مراقبة معلوماتية فقط — ليست نصيحة مالية.",
+    navBusiness: "الأعمال",
+    navContact: "اتصل بنا",
+    startersTitle: "اقتراحات شائعة",
+    startersHint: "اختياري — اختر واحدة لتعبئة الطلب، أو اكتب طلبك بالأعلى.",
+    urlStep: "صفحة المصدر",
+    activating: "جارٍ التفعيل…",
   },
 } as const;
 
