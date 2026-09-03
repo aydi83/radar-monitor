@@ -9,6 +9,8 @@ import { RadarMark } from "@/components/radar/RadarMark";
 import { LanguageSelector } from "@/components/radar/LanguageSelector";
 import { createMonitorTask, listMonitorTasks, type TaskSummary } from "@/lib/monitor.functions";
 import { takePendingRequest } from "@/lib/pending-request";
+import { DangerZone } from "@/components/radar/DangerZone";
+import { SiteFooter } from "@/components/radar/SiteFooter";
 
 export const Route = createFileRoute("/_authenticated/radar/")({
   head: () => ({
@@ -127,6 +129,9 @@ function MyRadar() {
           <Plus className="h-4 w-4" />
           {t("newRequest")}
         </Link>
+
+        <DangerZone />
+        <SiteFooter />
       </main>
     </div>
   );
