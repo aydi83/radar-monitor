@@ -88,7 +88,7 @@ export function LandingScreen({
               <textarea
                 id="radar-input"
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => changeRequest(e.target.value)}
                 rows={3}
                 maxLength={280}
                 placeholder={t("placeholder")}
@@ -115,7 +115,7 @@ export function LandingScreen({
                 <button
                   key={ex}
                   type="button"
-                  onClick={() => setValue(ex)}
+                  onClick={() => changeRequest(ex)}
                   className="group inline-flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-border bg-card/70 px-4 py-2.5 text-start text-sm text-foreground transition-colors hover:border-primary-glow hover:bg-card"
                 >
                   <span className="min-w-0 break-words">{ex}</span>
@@ -126,10 +126,7 @@ export function LandingScreen({
           </div>
 
           <StarterCategories
-            onPick={(item) => {
-              setValue(item.request);
-              setUrl(item.url);
-            }}
+            onPick={(item) => changeRequest(item.request, item.url)}
           />
         </form>
 
