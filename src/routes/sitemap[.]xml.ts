@@ -1,7 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 const BASE = "https://radar.lovable.app";
-const PATHS = ["/", "/about", "/privacy", "/terms", "/auth"];
+const PATHS = [
+  "/",
+  "/about",
+  "/privacy",
+  "/terms",
+  "/auth",
+  "/monitor/iphone-price",
+  "/monitor/gold-price",
+  "/monitor/bitcoin",
+  "/monitor/tesla",
+  "/monitor/brent-crude",
+  "/monitor/usd",
+];
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {

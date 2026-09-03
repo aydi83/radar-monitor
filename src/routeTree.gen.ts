@@ -16,6 +16,12 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as MonitorBitcoinRouteImport } from './routes/monitor.bitcoin'
+import { Route as MonitorBrentCrudeRouteImport } from './routes/monitor.brent-crude'
+import { Route as MonitorGoldPriceRouteImport } from './routes/monitor.gold-price'
+import { Route as MonitorIphonePriceRouteImport } from './routes/monitor.iphone-price'
+import { Route as MonitorTeslaRouteImport } from './routes/monitor.tesla'
+import { Route as MonitorUsdRouteImport } from './routes/monitor.usd'
 import { Route as AuthenticatedRadarIndexRouteImport } from './routes/_authenticated/radar.index'
 import { Route as AuthenticatedRadarIdRouteImport } from './routes/_authenticated/radar.$id'
 import { Route as ApiPublicRunMonitorChecksRouteImport } from './routes/api/public/run-monitor-checks'
@@ -54,6 +60,36 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MonitorBitcoinRoute = MonitorBitcoinRouteImport.update({
+  id: '/monitor/bitcoin',
+  path: '/monitor/bitcoin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitorBrentCrudeRoute = MonitorBrentCrudeRouteImport.update({
+  id: '/monitor/brent-crude',
+  path: '/monitor/brent-crude',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitorGoldPriceRoute = MonitorGoldPriceRouteImport.update({
+  id: '/monitor/gold-price',
+  path: '/monitor/gold-price',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitorIphonePriceRoute = MonitorIphonePriceRouteImport.update({
+  id: '/monitor/iphone-price',
+  path: '/monitor/iphone-price',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitorTeslaRoute = MonitorTeslaRouteImport.update({
+  id: '/monitor/tesla',
+  path: '/monitor/tesla',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitorUsdRoute = MonitorUsdRouteImport.update({
+  id: '/monitor/usd',
+  path: '/monitor/usd',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRadarIndexRoute = AuthenticatedRadarIndexRouteImport.update({
   id: '/radar/',
   path: '/radar/',
@@ -78,6 +114,12 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/monitor/bitcoin': typeof MonitorBitcoinRoute
+  '/monitor/brent-crude': typeof MonitorBrentCrudeRoute
+  '/monitor/gold-price': typeof MonitorGoldPriceRoute
+  '/monitor/iphone-price': typeof MonitorIphonePriceRoute
+  '/monitor/tesla': typeof MonitorTeslaRoute
+  '/monitor/usd': typeof MonitorUsdRoute
   '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/radar/': typeof AuthenticatedRadarIndexRoute
@@ -89,6 +131,12 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/monitor/bitcoin': typeof MonitorBitcoinRoute
+  '/monitor/brent-crude': typeof MonitorBrentCrudeRoute
+  '/monitor/gold-price': typeof MonitorGoldPriceRoute
+  '/monitor/iphone-price': typeof MonitorIphonePriceRoute
+  '/monitor/tesla': typeof MonitorTeslaRoute
+  '/monitor/usd': typeof MonitorUsdRoute
   '/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/radar': typeof AuthenticatedRadarIndexRoute
@@ -102,6 +150,12 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/monitor/bitcoin': typeof MonitorBitcoinRoute
+  '/monitor/brent-crude': typeof MonitorBrentCrudeRoute
+  '/monitor/gold-price': typeof MonitorGoldPriceRoute
+  '/monitor/iphone-price': typeof MonitorIphonePriceRoute
+  '/monitor/tesla': typeof MonitorTeslaRoute
+  '/monitor/usd': typeof MonitorUsdRoute
   '/_authenticated/radar/$id': typeof AuthenticatedRadarIdRoute
   '/api/public/run-monitor-checks': typeof ApiPublicRunMonitorChecksRoute
   '/_authenticated/radar/': typeof AuthenticatedRadarIndexRoute
@@ -115,6 +169,12 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
+    | '/monitor/bitcoin'
+    | '/monitor/brent-crude'
+    | '/monitor/gold-price'
+    | '/monitor/iphone-price'
+    | '/monitor/tesla'
+    | '/monitor/usd'
     | '/radar/$id'
     | '/api/public/run-monitor-checks'
     | '/radar/'
@@ -126,6 +186,12 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
+    | '/monitor/bitcoin'
+    | '/monitor/brent-crude'
+    | '/monitor/gold-price'
+    | '/monitor/iphone-price'
+    | '/monitor/tesla'
+    | '/monitor/usd'
     | '/radar/$id'
     | '/api/public/run-monitor-checks'
     | '/radar'
@@ -138,6 +204,12 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
+    | '/monitor/bitcoin'
+    | '/monitor/brent-crude'
+    | '/monitor/gold-price'
+    | '/monitor/iphone-price'
+    | '/monitor/tesla'
+    | '/monitor/usd'
     | '/_authenticated/radar/$id'
     | '/api/public/run-monitor-checks'
     | '/_authenticated/radar/'
@@ -151,6 +223,12 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
+  MonitorBitcoinRoute: typeof MonitorBitcoinRoute
+  MonitorBrentCrudeRoute: typeof MonitorBrentCrudeRoute
+  MonitorGoldPriceRoute: typeof MonitorGoldPriceRoute
+  MonitorIphonePriceRoute: typeof MonitorIphonePriceRoute
+  MonitorTeslaRoute: typeof MonitorTeslaRoute
+  MonitorUsdRoute: typeof MonitorUsdRoute
   ApiPublicRunMonitorChecksRoute: typeof ApiPublicRunMonitorChecksRoute
 }
 
@@ -205,6 +283,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/monitor/bitcoin': {
+      id: '/monitor/bitcoin'
+      path: '/monitor/bitcoin'
+      fullPath: '/monitor/bitcoin'
+      preLoaderRoute: typeof MonitorBitcoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitor/brent-crude': {
+      id: '/monitor/brent-crude'
+      path: '/monitor/brent-crude'
+      fullPath: '/monitor/brent-crude'
+      preLoaderRoute: typeof MonitorBrentCrudeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitor/gold-price': {
+      id: '/monitor/gold-price'
+      path: '/monitor/gold-price'
+      fullPath: '/monitor/gold-price'
+      preLoaderRoute: typeof MonitorGoldPriceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitor/iphone-price': {
+      id: '/monitor/iphone-price'
+      path: '/monitor/iphone-price'
+      fullPath: '/monitor/iphone-price'
+      preLoaderRoute: typeof MonitorIphonePriceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitor/tesla': {
+      id: '/monitor/tesla'
+      path: '/monitor/tesla'
+      fullPath: '/monitor/tesla'
+      preLoaderRoute: typeof MonitorTeslaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitor/usd': {
+      id: '/monitor/usd'
+      path: '/monitor/usd'
+      fullPath: '/monitor/usd'
+      preLoaderRoute: typeof MonitorUsdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/radar/': {
       id: '/_authenticated/radar/'
       path: '/radar'
@@ -250,6 +370,12 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
+  MonitorBitcoinRoute: MonitorBitcoinRoute,
+  MonitorBrentCrudeRoute: MonitorBrentCrudeRoute,
+  MonitorGoldPriceRoute: MonitorGoldPriceRoute,
+  MonitorIphonePriceRoute: MonitorIphonePriceRoute,
+  MonitorTeslaRoute: MonitorTeslaRoute,
+  MonitorUsdRoute: MonitorUsdRoute,
   ApiPublicRunMonitorChecksRoute: ApiPublicRunMonitorChecksRoute,
 }
 export const routeTree = rootRouteImport

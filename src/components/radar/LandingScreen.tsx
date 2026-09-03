@@ -18,8 +18,23 @@ export function LandingScreen({
   const { t } = useI18n();
   const [value, setValue] = useState(initialValue);
   const [url, setUrl] = useState(initialUrl);
+  // The suggested URL only belongs to the request that produced it. As soon as
+  // the request text changes, a stale starter URL must not silently survive.
+  const [urlOwner, setUrlOwner] = useState(initialUrl ? initialValue : "");
+
+  const changeRequest = (next: string, nextUrl?: string) => {
+    setValue(next);
+    if (nextUrl !== undefined) {
+      setUrl(nextUrl);
+      setUrlOwner(next);
+    } else if (next !== urlOwner) {
+      setUrl("");
+      setUrlOwner("");
+    }
+  };
 
   const examples = [t("ex1"), t("ex2"), t("ex3")];
+
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-x-clip px-4 pb-8 pt-5 sm:max-w-xl sm:px-6 sm:pt-8">
@@ -73,7 +88,7 @@ export function LandingScreen({
               <textarea
                 id="radar-input"
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => changeRequest(e.target.value)}
                 rows={3}
                 maxLength={280}
                 placeholder={t("placeholder")}
@@ -100,7 +115,7 @@ export function LandingScreen({
                 <button
                   key={ex}
                   type="button"
-                  onClick={() => setValue(ex)}
+                  onClick={() => changeRequest(ex)}
                   className="group inline-flex min-h-12 w-full items-center justify-between gap-3 rounded-2xl border border-border bg-card/70 px-4 py-2.5 text-start text-sm text-foreground transition-colors hover:border-primary-glow hover:bg-card"
                 >
                   <span className="min-w-0 break-words">{ex}</span>
@@ -111,10 +126,7 @@ export function LandingScreen({
           </div>
 
           <StarterCategories
-            onPick={(item) => {
-              setValue(item.request);
-              setUrl(item.url);
-            }}
+            onPick={(item) => changeRequest(item.request, item.url)}
           />
         </form>
 
