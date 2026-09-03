@@ -18,8 +18,23 @@ export function LandingScreen({
   const { t } = useI18n();
   const [value, setValue] = useState(initialValue);
   const [url, setUrl] = useState(initialUrl);
+  // The suggested URL only belongs to the request that produced it. As soon as
+  // the request text changes, a stale starter URL must not silently survive.
+  const [urlOwner, setUrlOwner] = useState(initialUrl ? initialValue : "");
+
+  const changeRequest = (next: string, nextUrl?: string) => {
+    setValue(next);
+    if (nextUrl !== undefined) {
+      setUrl(nextUrl);
+      setUrlOwner(next);
+    } else if (next !== urlOwner) {
+      setUrl("");
+      setUrlOwner("");
+    }
+  };
 
   const examples = [t("ex1"), t("ex2"), t("ex3")];
+
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-x-clip px-4 pb-8 pt-5 sm:max-w-xl sm:px-6 sm:pt-8">
