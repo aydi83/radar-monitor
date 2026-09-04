@@ -76,14 +76,7 @@ export function ConfirmScreen({
           </Block>
 
           <Block icon={<Globe className="h-4 w-4" />} label={t("sources")}>
-            <ul className="space-y-1.5">
-              {plan.sources.map((s) => (
-                <li key={s} className="flex items-center gap-2 text-sm">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary-glow" />
-                  {s}
-                </li>
-              ))}
-            </ul>
+            <p className="text-sm leading-relaxed text-muted-foreground">{t("sourcesReality")}</p>
           </Block>
         </div>
 
