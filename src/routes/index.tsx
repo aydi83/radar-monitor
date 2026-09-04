@@ -53,7 +53,9 @@ function RadarFlow() {
 
   const start = (value: string, sourceUrl: string) => {
     setRaw(value);
-    if (sourceUrl) setUrl(sourceUrl);
+    // A suggested source URL belongs to the request that produced it: never let
+    // a previous starter URL survive silently into a different request.
+    setUrl(sourceUrl);
     setPlan(parseRequest(value, lang));
     setStep("confirm");
   };
