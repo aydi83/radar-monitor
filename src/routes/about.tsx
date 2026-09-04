@@ -127,7 +127,10 @@ function AboutPage() {
 
         <SiteFooter />
 
-        <p className="mt-6 text-center text-xs text-muted-foreground">{c.founder}</p>
+        {/* Brand statement: kept verbatim in English in every language. */}
+        <p dir="ltr" className="mt-6 text-center text-xs text-muted-foreground">
+          RADAR was founded and created by AYDI ADEL in 2026.
+        </p>
       </main>
     </div>
   );
