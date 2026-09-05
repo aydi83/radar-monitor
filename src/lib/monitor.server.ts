@@ -132,7 +132,7 @@ export async function runCheckForTask(admin: AdminClient, task: MonitorTaskRow) 
 
   if (verdict.changed) {
     const excerpt = diffExcerpt(previousText, outcome.text);
-    await admin.from("monitor_changes").insert({
+    const { error: changeError } = await admin.from("monitor_changes").insert({
       task_id: task.id,
       check_id: check?.id ?? null,
       title: outcome.title ?? task.target_name ?? hostOf(url),
@@ -140,8 +140,11 @@ export async function runCheckForTask(admin: AdminClient, task: MonitorTaskRow) 
       before_text: excerpt.before.slice(0, 600),
       after_text: excerpt.after.slice(0, 600),
       source_url: outcome.url,
-      importance: verdict.score >= 0.15 ? "high" : "normal",
+      // Allowed values are exactly "normal" | "important".
+      importance: verdict.score >= 0.15 ? "important" : "normal",
     });
+    // A silently dropped change row would make the history look empty; surface it.
+    if (changeError) console.error("monitor_changes insert failed", changeError);
   }
 
   await admin

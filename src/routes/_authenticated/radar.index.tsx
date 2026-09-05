@@ -97,7 +97,8 @@ function MyRadar() {
             {t("signOut")}
           </button>
         </div>
-        <p className="mt-2 text-xs text-muted-foreground">{t("manualOnly")}</p>
+        {/* Scheduled checks are really enabled (every 6 hours) — say so accurately. */}
+        <p className="mt-2 text-xs text-muted-foreground">{t("autoChecks")}</p>
 
         {pendingError ? (
           <p role="alert" className="mt-4 rounded-xl bg-destructive/10 px-3 py-2 text-sm text-destructive">
