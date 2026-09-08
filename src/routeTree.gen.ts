@@ -17,7 +17,6 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as MonitorBitcoinRouteImport } from './routes/monitor.bitcoin'
-import { Route as MonitorBrentCrudeRouteImport } from './routes/monitor.brent-crude'
 import { Route as MonitorGoldPriceRouteImport } from './routes/monitor.gold-price'
 import { Route as MonitorIphonePriceRouteImport } from './routes/monitor.iphone-price'
 import { Route as MonitorTeslaRouteImport } from './routes/monitor.tesla'
@@ -65,11 +64,6 @@ const MonitorBitcoinRoute = MonitorBitcoinRouteImport.update({
   path: '/monitor/bitcoin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MonitorBrentCrudeRoute = MonitorBrentCrudeRouteImport.update({
-  id: '/monitor/brent-crude',
-  path: '/monitor/brent-crude',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MonitorGoldPriceRoute = MonitorGoldPriceRouteImport.update({
   id: '/monitor/gold-price',
   path: '/monitor/gold-price',
@@ -115,7 +109,6 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/monitor/bitcoin': typeof MonitorBitcoinRoute
-  '/monitor/brent-crude': typeof MonitorBrentCrudeRoute
   '/monitor/gold-price': typeof MonitorGoldPriceRoute
   '/monitor/iphone-price': typeof MonitorIphonePriceRoute
   '/monitor/tesla': typeof MonitorTeslaRoute
@@ -132,7 +125,6 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/monitor/bitcoin': typeof MonitorBitcoinRoute
-  '/monitor/brent-crude': typeof MonitorBrentCrudeRoute
   '/monitor/gold-price': typeof MonitorGoldPriceRoute
   '/monitor/iphone-price': typeof MonitorIphonePriceRoute
   '/monitor/tesla': typeof MonitorTeslaRoute
@@ -151,7 +143,6 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/monitor/bitcoin': typeof MonitorBitcoinRoute
-  '/monitor/brent-crude': typeof MonitorBrentCrudeRoute
   '/monitor/gold-price': typeof MonitorGoldPriceRoute
   '/monitor/iphone-price': typeof MonitorIphonePriceRoute
   '/monitor/tesla': typeof MonitorTeslaRoute
@@ -170,7 +161,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/monitor/bitcoin'
-    | '/monitor/brent-crude'
     | '/monitor/gold-price'
     | '/monitor/iphone-price'
     | '/monitor/tesla'
@@ -187,7 +177,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/monitor/bitcoin'
-    | '/monitor/brent-crude'
     | '/monitor/gold-price'
     | '/monitor/iphone-price'
     | '/monitor/tesla'
@@ -205,7 +194,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/monitor/bitcoin'
-    | '/monitor/brent-crude'
     | '/monitor/gold-price'
     | '/monitor/iphone-price'
     | '/monitor/tesla'
@@ -224,7 +212,6 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   MonitorBitcoinRoute: typeof MonitorBitcoinRoute
-  MonitorBrentCrudeRoute: typeof MonitorBrentCrudeRoute
   MonitorGoldPriceRoute: typeof MonitorGoldPriceRoute
   MonitorIphonePriceRoute: typeof MonitorIphonePriceRoute
   MonitorTeslaRoute: typeof MonitorTeslaRoute
@@ -288,13 +275,6 @@ declare module '@tanstack/react-router' {
       path: '/monitor/bitcoin'
       fullPath: '/monitor/bitcoin'
       preLoaderRoute: typeof MonitorBitcoinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/monitor/brent-crude': {
-      id: '/monitor/brent-crude'
-      path: '/monitor/brent-crude'
-      fullPath: '/monitor/brent-crude'
-      preLoaderRoute: typeof MonitorBrentCrudeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/monitor/gold-price': {
@@ -371,7 +351,6 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   MonitorBitcoinRoute: MonitorBitcoinRoute,
-  MonitorBrentCrudeRoute: MonitorBrentCrudeRoute,
   MonitorGoldPriceRoute: MonitorGoldPriceRoute,
   MonitorIphonePriceRoute: MonitorIphonePriceRoute,
   MonitorTeslaRoute: MonitorTeslaRoute,
