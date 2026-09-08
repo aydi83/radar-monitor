@@ -89,15 +89,6 @@ export const STARTER_CATEGORIES: StarterCategory[] = [
     ],
   },
   {
-    id: "energy",
-    labelKey: "catEnergy",
-    items: [
-      { slug: "brent-crude", label: "Brent Crude", request: "Monitor Brent crude oil price", url: "https://oilprice.com/oil-price-charts" },
-      { slug: "wti-crude", label: "WTI Crude", request: "Monitor WTI crude oil price", url: "https://oilprice.com/oil-price-charts" },
-      { slug: "dubai-oman-crude", label: "Dubai/Oman Crude", request: "Monitor Dubai/Oman crude oil price", url: "https://oilprice.com/oil-price-charts" },
-    ],
-  },
-  {
     id: "brands",
     labelKey: "catBrands",
     items: [

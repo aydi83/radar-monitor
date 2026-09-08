@@ -11,7 +11,7 @@ const PATHS = [
   "/monitor/gold-price",
   "/monitor/bitcoin",
   "/monitor/tesla",
-  "/monitor/brent-crude",
+  
   "/monitor/usd",
 ];
 
