@@ -108,4 +108,4 @@ export function findStarter(slug: string): StarterItem | undefined {
 }
 
 /** The small set of genuinely useful public discovery pages we ship in 1.0. */
-export const DISCOVERY_SLUGS = ["iphone", "gold", "bitcoin", "tesla", "brent-crude", "usd"] as const;
+export const DISCOVERY_SLUGS = ["iphone", "gold", "bitcoin", "tesla", "usd"] as const;
